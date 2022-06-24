@@ -39,19 +39,24 @@ bot.on('message', async (message) => {
          reply_to_message_id: message_id,
       })
    } else if (text == '/root') {
-      let response = await fetch('https://mjservicesbackend.herokuapp.com/orders')
-      let res = await response.json()
       let text = ''
-      res.forEach(element => {
-         let t = `${element?.user_name},
+      try {
+         let response = await fetch('https://mjservicesbackend.herokuapp.com/orders')
+         let res = await response.json()
+         res.forEach(element => {
+            let t = `${element?.user_name},
       ${element?.phone_number},
       ${element?.service_name}
       `
-         text += `======
+            text += `======
       ${t}
       `
-      });
-   
+         });
+      } catch {
+         text = 'Xatolik yuz berdi, qaytadan urinib ko`ring !'
+      }
+
+
       bot.sendMessage(chatId, text, {
          parse_mode: 'HTML',
          reply_to_message_id: message_id,
@@ -94,7 +99,7 @@ bot.on('message', async (message) => {
       console.log(message)
    } else if (text == '/whoami') {
       let photos = await bot.getUserProfilePhotos(chatId)
-      let msg = await bot.sendPhoto(chatId, photos.photos[0][2]?.file_id, {
+      let msg = await bot.sendPhoto(chatId, photos.photos[0][2] ? .file_id, {
          caption: 'Bu kishini taniysizmi ?'
       })
 
