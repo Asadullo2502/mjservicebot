@@ -1,3 +1,9 @@
+const express = require('express');
+const app = express()
+const cors = require('cors')
+
+
+
 const TelegramBot = require('node-telegram-bot-api')
 const fetch = require('node-fetch');
 const TOKEN = `5209262509:AAFTOLioXcJSy1t5WkE3zT76xCl8eJqs0c4`;
@@ -124,3 +130,18 @@ bot.on('callback_query', message => {
       })
    }
 })
+
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({
+   extended: true
+}))
+
+app.use('/', (req, res) => {
+   res.send('USER')
+})
+
+const server = app.listen(process.env.PORT || 5000, () => {
+   const port = server.address().port;
+   console.log(`Express is working on port ${port}`);
+});
