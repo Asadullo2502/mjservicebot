@@ -99,7 +99,7 @@ bot.on('message', async (message) => {
       console.log(message)
    } else if (text == '/whoami') {
       let photos = await bot.getUserProfilePhotos(chatId)
-      let msg = await bot.sendPhoto(chatId, photos.photos[0][2] ? .file_id, {
+      let msg = await bot.sendPhoto(chatId, photos.photos[0][2]?.file_id, {
          caption: 'Bu kishini taniysizmi ?'
       })
 
